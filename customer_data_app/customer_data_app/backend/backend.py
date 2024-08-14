@@ -49,7 +49,8 @@ class State(rx.State):
     # Values for current and previous month
     current_month_values: MonthValues = MonthValues()
     previous_month_values: MonthValues = MonthValues()
-
+    add_dialog_opened: bool = False
+    update_dialog_opened: bool = False
 
     def load_entries(self) -> list[Customer]:
         """Get all users from the database."""
@@ -145,6 +146,7 @@ class State(rx.State):
             session.add(Customer(**self.current_user))
             session.commit()
         self.load_entries()
+        self.set_add_dialog_state(False)
         return rx.toast.info(f"User {self.current_user['name']} has been added.", variant="outline", position="bottom-right")
     
 
@@ -160,6 +162,7 @@ class State(rx.State):
             session.add(customer)
             session.commit()
         self.load_entries()
+        self.set_update_dialog_state(False)
         return rx.toast.info(f"User {self.current_user['name']} has been modified.", variant="outline", position="bottom-right")
 
 
@@ -172,6 +175,11 @@ class State(rx.State):
         self.load_entries()
         return rx.toast.info(f"User {customer.name} has been deleted.", variant="outline", position="bottom-right")
     
+    def set_add_dialog_state(self, opened: bool):
+        self.add_dialog_opened = opened    
+    
+    def set_update_dialog_state(self, opened: bool):
+        self.update_dialog_opened = opened    
     
     @rx.var
     def payments_change(self) -> float:

@@ -141,9 +141,7 @@ def add_customer_button() -> rx.Component:
                             ),
                         ),
                         rx.form.submit(
-                            rx.dialog.close(
-                                rx.button("Submit Customer"),
-                            ),
+                            rx.button("Submit Customer"),
                             as_child=True,
                         ),
                         padding_top="2em",
@@ -164,6 +162,8 @@ def add_customer_button() -> rx.Component:
             border=f"2px solid {rx.color('accent', 7)}",
             border_radius="25px",
         ),
+        open=State.add_dialog_opened,
+        on_open_change=State.set_add_dialog_state,
     )
 
 
@@ -283,9 +283,7 @@ def update_customer_dialog(user):
                             ),
                         ),
                         rx.form.submit(
-                            rx.dialog.close(
-                                rx.button("Update Customer"),
-                            ),
+                            rx.button("Update Customer"),
                             as_child=True,
                         ),
                         padding_top="2em",
@@ -306,6 +304,8 @@ def update_customer_dialog(user):
             border=f"2px solid {rx.color('accent', 7)}",
             border_radius="25px",
         ),
+        open=State.update_dialog_opened,
+        on_open_change=State.set_update_dialog_state,
     )
 
 
